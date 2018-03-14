@@ -55,6 +55,7 @@
 }
 
 - (void)appDidEnterBackground {
+#ifdef TODAY_EXTENSION
     if (!self.sessionManager.requiresTearDown) {
         // we don't want to tear down session as it's already closed
         return;
@@ -65,6 +66,7 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf endBackgroundTask];
     }];
+#endif
 }
 
 - (void)appDidBecomeActive {
@@ -72,10 +74,12 @@
 }
 
 - (void)endBackgroundTask {
+#ifdef TODAY_EXTENSION
     if (self.backgroundTask) {
         [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
         self.backgroundTask = UIBackgroundTaskInvalid;
     }
+#endif
 }
 
 @end
